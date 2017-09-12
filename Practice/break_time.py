@@ -3,7 +3,8 @@
 import time
 import webbrowser
 
-#学习 python ， 定时打开网页，可以用于提醒休息
+# 学习 python ， 定时打开网页，可以用于提醒休息
+# learning python, open the web page can be used to remind the rest of time,
 total_breaks = 7
 break_count = 0
 
