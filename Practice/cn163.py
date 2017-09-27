@@ -32,13 +32,15 @@ class Archives(object):
             print(ee)
             pass
         for i in links:
-            links_dict[int(i[1][1:3]) * 100 + int(i[2][1:3])] = i#把剧集按s和e提取编号
+            # 把剧集按s和e提取编号
+            links_dict[int(i[1][1:3]) * 100 + int(i[2][1:3])] = i
             print(i)
         try:
             print (os.getcwd() + name[0].replace('/', ' '))
             with open(file='D:\\CodeWorkspace\\videos\\' + name[0].replace('/', ' ') + '.txt', mode='a', encoding='utf-8') as f:
-            # with open('D:\\CodeWorkspace\\test.txt','a','utf8') as f:
-                for i in sorted(list(links_dict.keys())):#按季数+集数排序顺序写入
+                # with open('D:\\CodeWorkspace\\test.txt','a','utf8') as f:
+                # 按季数+集数排序顺序写入
+                for i in sorted(list(links_dict.keys())):
                     f.write(links_dict[i][0] + '\n')
             print("8 Get links ... ", name[0], count)
         except Exception as ex:
@@ -60,7 +62,7 @@ class Archives(object):
             pass
 
     def main(self):
-        thread1=threading.Thread(target=self.get_urls())
+        thread1 = threading.Thread(target=self.get_urls())
         thread1.start()
         thread1.join()
 
