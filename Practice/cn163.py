@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 #  _*_coding:utf-8_*_
-'''
+"""
 document note
-'''
+"""
 import re
 import threading
 import time
@@ -10,9 +10,12 @@ import os
 import requests
 
 PYTHONIOENCODING = 'utf-8'
+
 class Archives(object):
-    def save_links(self, url) :
-        '''this is save file'''
+    def save_links(self, url):
+        """
+        this is save file
+        """
         links = []
         links_dict = {}
         name = []
@@ -34,7 +37,7 @@ class Archives(object):
         try:
             print (os.getcwd() + name[0].replace('/', ' '))
             with open(file='D:\\CodeWorkspace\\videos\\' + name[0].replace('/', ' ') + '.txt', mode='a', encoding='utf-8') as f:
-            #with open('D:\\CodeWorkspace\\test.txt','a','utf8') as f:
+            # with open('D:\\CodeWorkspace\\test.txt','a','utf8') as f:
                 for i in sorted(list(links_dict.keys())):#按季数+集数排序顺序写入
                     f.write(links_dict[i][0] + '\n')
             print("8 Get links ... ", name[0], count)
@@ -48,7 +51,7 @@ class Archives(object):
                 base_url = 'http://cn163.net/archives/'
                 url = base_url + str(i) + '/'
                 if requests.get(url).status_code == 404:
-                    print ("error 404")
+                    print("error 404")
                     continue
                 else:
                     self.save_links(url)
