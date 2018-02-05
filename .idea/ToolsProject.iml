@@ -6,6 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="operationAndMaintenance" />
     <orderEntry type="module" module-name="dataAnalysis" />
+    <orderEntry type="module" module-name="GeneralTools" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />
