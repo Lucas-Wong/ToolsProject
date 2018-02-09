@@ -21,7 +21,7 @@ class Archives(object):
         name = []
         count = 0
         try:
-            data = requests.get(url, timeout = 3)
+            data = requests.get(url, timeout=3)
             content = data.text
             link_pat = '"(ed2k://\|file\|[^"]+?\.(S\d+)(E\d+)[^"]+?1024X\d{3}[^"]+?)"'
             name_pat = re.compile(r'<h2 class="entry_title">(.*?)</h2>', re.S)
