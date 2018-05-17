@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 class TrainCollection(object):
 
-    header = u"车次 出发\到达站 出发\到达时间 历时 一等座 二等座 软卧 硬卧 软座 硬座 无座".split()
+    header = u"车次 出发\到达站 出发\\到达时间 历时 一等座 二等座 软卧 硬卧 软座 硬座 无座".split()
 
     def __init__(self, rows):
         self.rows = rows
