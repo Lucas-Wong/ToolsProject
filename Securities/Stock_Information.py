@@ -30,12 +30,12 @@ gpr,毛利率(%)
 npr,净利润率(%)
 holders,股东人数
 """
-# listStock = ts.get_stock_basics()
-# print(listStock)
+listStock = ts.get_stock_basics()
+print(listStock)
 
 # 日复权行情接口
-listDay = ts.get_h_data('002337', start='2015-01-01', end='2015-03-16') #两个日期之间的前复权数据
-print(listDay)
+# listDay = ts.get_h_data('002337', start='2018-01-01', end='2018-01-28') #两个日期之间的前复权数据
+# print(listDay)
 """
 parameter：
 code:string,股票代码 e.g. 600848
