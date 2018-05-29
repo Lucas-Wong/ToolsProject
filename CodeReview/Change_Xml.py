@@ -34,10 +34,10 @@ class change_xml(object):
         :return:
         """
         root = self.tree.getroot()
-        print(root)
+        # print(root)
         for item in root.getchildren():
             # root.iter("file"):
-            print(item.get("url"))
+            # print(item.get("url"))
 
             item.set("url", item.get('url').replace(self.old_path_name, self.path_name))
 
@@ -48,6 +48,7 @@ class change_xml(object):
 
     def write_xml(self):
         self.tree.write(self.file_path + self.file_name)
+        print("Update xml file success. file: " +  self.file_path + self.file_name)
 
 if __name__ == '__main__':
     """

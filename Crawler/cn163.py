@@ -21,22 +21,25 @@ class Archives(object):
         name = []
         count = 0
         try:
+            print(url)
             data = requests.get(url, timeout=3)
             content = data.text
             link_pat = '"(ed2k://\|file\|[^"]+?\.(S\d+)(E\d+)[^"]+?1024X\d{3}[^"]+?)"'
             name_pat = re.compile(r'<h2 class="entry_title">(.*?)</h2>', re.S)
             links = set(re.findall(link_pat, content))
+            print(links)
             name = re.findall(name_pat, content)
             count = len(links)
         except Exception as ee:
-            print(ee)
+            print("2", ee)
             pass
         for i in links:
             # 把剧集按s和e提取编号
             links_dict[int(i[1][1:3]) * 100 + int(i[2][1:3])] = i
             print(i)
         try:
-            print (os.getcwd() + name[0].replace('/', ' '))
+            print(name)
+            print(os.getcwd() + name[0].replace('/', ' '))
             with open(file='D:\\CodeWorkspace\\videos\\' + name[0].replace('/', ' ') + '.txt', mode='a', encoding='utf-8') as f:
                 # with open('D:\\CodeWorkspace\\test.txt','a','utf8') as f:
                 # 按季数+集数排序顺序写入
@@ -44,7 +47,7 @@ class Archives(object):
                     f.write(links_dict[i][0] + '\n')
             print("8 Get links ... ", name[0], count)
         except Exception as ex:
-            print (ex)
+            print("3", ex)
             pass
 
     def get_urls(self):
@@ -58,7 +61,7 @@ class Archives(object):
                 else:
                     self.save_links(url)
         except Exception as et:
-            print(et)
+            print("1", et)
             pass
 
     def main(self):
