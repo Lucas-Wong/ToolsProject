@@ -76,7 +76,7 @@ def newco_release_file():
     print("Current Working Directory is " + os.getcwd())
 
     file_operation.remove_file(file_name_list)
-    file_operation.change_file(r'http://172.16.1.162:8097/UpdateClient/')
+    file_operation.change_file(r'http://172.16.1.162:8097/UpdateClient-release/')
 
 
 def newco_dev_file():
