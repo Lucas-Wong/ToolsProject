@@ -30,7 +30,7 @@ class Path(object):
         Live url
         :return:
         """
-        return "http://172.16.1.83:8097/iConn/iconnHandler.do"
+        return "http://172.16.1.82:8097/iConn/iconnHandler.do"
 
 if __name__ == '__main__':
     url = Path()
