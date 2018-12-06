@@ -1,11 +1,19 @@
 # ! /usr/bin/env python
 # _*_ coding:utf-8 _*_
 """
-@author = lucas.wang
-@create_time = 2017-12-23 14:18
+-----------------------------------------------------------
+ Name：            
+ Purpose：         
+
+ Author：          lucas.wang
+
+ Created：         2017-12-23 14:18
+ Copyright：       (C) Lucas.wang 2018
+ Licence:          MIT
+ ----------------------------------------------------------
 """
 
-import parameter
+from parameter import parameter
 import DataEncoding
 import Path
 import json
@@ -62,7 +70,7 @@ class monitor(object):
         :return:
         """
         total_processed_count = 0
-        para = parameter.parameter(0, job_id)
+        para = parameter(0, job_id)
         friday_run = para.go_on_ad_to_order()
 
         encode_str = DataEncoding.DataEncoding(json.dumps(friday_run))
@@ -72,7 +80,7 @@ class monitor(object):
 
         operation = json.dumps(self.data)
 
-        response = requests.post(url, headers=self.headers, timeout=3,
+        response = requests.post(url, headers=self.headers, timeout=5,
                                  data=operation)
 
         return_object = json.loads(json.loads(response.text)["string"])
@@ -85,7 +93,7 @@ class monitor(object):
                 for item in total_ad_count:
                     country_item = dict(item)
                     # print(country_item["countryCode"], country_item["totalProcessedCount"])
-                    logger.info(country_item["countryCode"] + "---" + str(country_item["totalProcessedCount"]))
+                    # logger.info(country_item["countryCode"] + "---" + str(country_item["totalProcessedCount"]))
                     total_processed_count += int(country_item["totalProcessedCount"])
 
         # print("job id :", job_id, "total count :", total_processed_count)
@@ -98,7 +106,7 @@ class monitor(object):
         :param job_id:
         :return:
         """
-        para = parameter.parameter(0, job_id)
+        para = parameter(0, job_id)
         friday_run = para.is_finish()
 
         encode_str = DataEncoding.DataEncoding(json.dumps(friday_run))
@@ -108,7 +116,7 @@ class monitor(object):
 
         operation = json.dumps(self.data)
 
-        response = requests.post(url, headers=self.headers, timeout=3,
+        response = requests.post(url, headers=self.headers, timeout=5,
                                  data=operation)
 
         return_object = json.loads(json.loads(response.text)["string"])
@@ -126,7 +134,7 @@ class monitor(object):
         :param job_id:
         :return:
         """
-        para = parameter.parameter(0, job_id)
+        para = parameter(0, job_id)
         friday_run = para.is_error()
 
         encode_str = DataEncoding.DataEncoding(json.dumps(friday_run))
@@ -136,7 +144,7 @@ class monitor(object):
 
         operation = json.dumps(self.data)
 
-        response = requests.post(url, headers=self.headers, timeout=3,
+        response = requests.post(url, headers=self.headers, timeout=10,
                                  data=operation)
 
         return_object = json.loads(json.loads(response.text)["string"])
@@ -156,11 +164,10 @@ class monitor(object):
             logger.info((str(job_str) + ' error number: ' + str(number)).center(50, '='))
 
     def main(self):
-        job_id = [6400, 6408]
-        dones = 2
+        job_id = [11346]
+        dones = 1
         job_total_count = {}
-        job_total_count[6400] = 2115
-        job_total_count[6408] = 337
+        job_total_count[11346] = 1027
 
         t = time.localtime()
         h = t.tm_hour
