@@ -61,6 +61,9 @@ class monitor(object):
 
     data = {"data": None}
 
+    job_processed_total_count = {}
+    job_stop_count = {}
+
     url1 = Path.Path()
 
     def run_ad(self, job_id, url, total_count):
@@ -98,6 +101,27 @@ class monitor(object):
 
         # print("job id :", job_id, "total count :", total_processed_count)
         logger.info("job id:" + str(job_id) + " --- total count: " + str(total_count) + ", Run total count: " + str(total_processed_count))
+
+        if self.job_processed_total_count is None:
+            self.job_processed_total_count[job_id] = total_processed_count
+            self.job_stop_count[job_id] = 1
+        else:
+            hasCount = 0
+            print("test count")
+            for key, value in self.job_processed_total_count:
+                if int(key) == job_id:
+                    hasCount = 1
+                    if int(value) == total_processed_count:
+                        self.job_stop_count[job_id] += 1
+                    else:
+                        self.job_stop_count[job_id] = 1
+            if hasCount == 0:
+                self.job_processed_total_count[job_id] = total_processed_count
+                self.job_stop_count[job_id] = 1
+
+        for key, value in self.job_stop_count:
+            if int(value) > 6:
+                logger.info("Job id: " + key + " stop run. please Restart the new thread.".center(80, "】"))
 
 
     def is_done(self, job_id, url):
@@ -181,7 +205,7 @@ class monitor(object):
         str_time = m
         done = None
         dones_id = None
-        url = self.url1.live()
+        url = self.url1.dev()
 
         while True:
             try:
