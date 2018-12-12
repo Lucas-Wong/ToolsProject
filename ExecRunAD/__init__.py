@@ -13,6 +13,19 @@
 """
 # ! /usr/bin/env python
 
+import configparser
+import Run
+import Global
+
+cp = configparser.SafeConfigParser()
+cp.read('Config.cfg')
+# cp.read('MaVie_Config.cfg')
 
 if __name__ == '__main__':
-    pass
+
+    Global.set_master_1_url(cp.get('Master-1', 'URL'))
+    Global.set_master_2_url(cp.get('Master-2', 'URL'))
+    Global.set_comm_week(cp.get('Week', 'Run_Week'))
+
+    run = Run.init_run()
+    run.main()
