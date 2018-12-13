@@ -165,10 +165,20 @@ if __name__ == '__main__':
     #  《一念永恒》'1_1094'  第八十七章
     # 《天道图书馆》 '17_17957'  第一百九十四章
     # 《符界之主》  '39_39432'
-    dl = downloader('39_39432')
+    # 系统让我去算命 '54_54833'
+    # 美国牧场的小生活 '52_52134'
+    # 调频未来 '35_35446'
+    # 仙界红包群 16_16643
+    # 寒门崛起 0_302
+    # 我是天庭扫把星 1_1919
+    # 超时空垃圾站 0_124
+    # 我在异界有个家 11_11628
+    # 篡命铜钱 3_3774
+    # 三寸人间 52_52561
+    dl = downloader('52_52561')
     dl.get_download_url()
     time.sleep(random.randint(1, 2))
-    print('《符界之主》开始下载：')
+    print('《三寸人间》开始下载：')
     for i in range(dl.nums):
         time.sleep(random.randint(1, 2))
         if dl.urls[i] is not None:
@@ -181,8 +191,8 @@ if __name__ == '__main__':
                     continue
             time.sleep(random.randint(1, 2))
             if text is not None:
-                dl.writer(dl.names[i], '符界之主.txt', text)
+                dl.writer(dl.names[i], '三寸人间.txt', text)
             sys.stdout.write("  已下载:%.3f%%" %  float(i/dl.nums) + '\r')
             print('  已下载:{:.3%}'.format(float(i/dl.nums)), '\r')
             sys.stdout.flush()
-    print('《符界之主》下载完成')
+    print('《三寸人间》下载完成')
