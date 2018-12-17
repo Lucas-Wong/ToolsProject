@@ -173,12 +173,13 @@ if __name__ == '__main__':
     # 我是天庭扫把星 1_1919
     # 超时空垃圾站 0_124
     # 我在异界有个家 11_11628
-    # 篡命铜钱 3_3774
     # 三寸人间 52_52561
-    dl = downloader('52_52561')
+    # 雷霆之主 54_54918
+    # 武道宗师 1_1452
+    dl = downloader('54_54918')
     dl.get_download_url()
     time.sleep(random.randint(1, 2))
-    print('《三寸人间》开始下载：')
+    print('《雷霆之主》开始下载：')
     for i in range(dl.nums):
         time.sleep(random.randint(1, 2))
         if dl.urls[i] is not None:
@@ -191,8 +192,9 @@ if __name__ == '__main__':
                     continue
             time.sleep(random.randint(1, 2))
             if text is not None:
-                dl.writer(dl.names[i], '三寸人间.txt', text)
+                dl.writer(dl.names[i], '雷霆之主.txt', text)
             sys.stdout.write("  已下载:%.3f%%" %  float(i/dl.nums) + '\r')
             print('  已下载:{:.3%}'.format(float(i/dl.nums)), '\r')
+            print('当前：', i, ' 总计：', dl.nums)
             sys.stdout.flush()
-    print('《三寸人间》下载完成')
+    print('《雷霆之主》下载完成')
