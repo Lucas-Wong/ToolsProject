@@ -83,9 +83,13 @@ class monitor(object):
 
         operation = json.dumps(self.data)
 
+        # print(url)
+        # print(friday_run)
         response = requests.post(url, headers=self.headers, timeout=5,
                                  data=operation)
 
+        # print(response.text)
+        # print(json.loads(response.text)["string"])
         return_object = json.loads(json.loads(response.text)["string"])
 
         if int(str(return_object["errorCode"])) == 200:
@@ -96,32 +100,42 @@ class monitor(object):
                 for item in total_ad_count:
                     country_item = dict(item)
                     # print(country_item["countryCode"], country_item["totalProcessedCount"])
-                    # logger.info(country_item["countryCode"] + "---" + str(country_item["totalProcessedCount"]))
+                    logger.info(country_item["countryCode"] + "---" + str(country_item["totalProcessedCount"]))
                     total_processed_count += int(country_item["totalProcessedCount"])
 
         # print("job id :", job_id, "total count :", total_processed_count)
         logger.info("job id:" + str(job_id) + " --- total count: " + str(total_count) + ", Run total count: " + str(total_processed_count))
 
-        if self.job_processed_total_count is None:
+        if any(self.job_processed_total_count) is False:
+            # print('test')
             self.job_processed_total_count[job_id] = total_processed_count
             self.job_stop_count[job_id] = 1
         else:
             hasCount = 0
-            print("test count")
-            for key, value in self.job_processed_total_count:
+            # print("test count")
+            for key in self.job_processed_total_count.keys():
+                # print('test 2')
                 if int(key) == job_id:
                     hasCount = 1
-                    if int(value) == total_processed_count:
+                    # print('hasCount = 1')
+                    if int(self.job_processed_total_count[key]) == total_processed_count:
                         self.job_stop_count[job_id] += 1
                     else:
                         self.job_stop_count[job_id] = 1
             if hasCount == 0:
+                # print('hasCount = 0')
                 self.job_processed_total_count[job_id] = total_processed_count
                 self.job_stop_count[job_id] = 1
 
-        for key, value in self.job_stop_count:
-            if int(value) > 6:
+        # print('job stop count')
+        for key in self.job_stop_count.keys():
+            # print('error ?')
+            if int(self.job_stop_count[key]) > 6:
                 logger.info("Job id: " + key + " stop run. please Restart the new thread.".center(80, "】"))
+
+        # print(self.job_stop_count)
+
+        return int(total_count[0]) - int(total_processed_count)
 
 
     def is_done(self, job_id, url):
@@ -188,10 +202,11 @@ class monitor(object):
             logger.info((str(job_str) + ' error number: ' + str(number)).center(50, '='))
 
     def main(self):
-        job_id = [11346]
-        dones = 1
+        job_id = [15362, 15371]
+        dones = 2
         job_total_count = {}
-        job_total_count[11346] = 1027
+        job_total_count[15362] = 2638
+        job_total_count[15371] = 2627
 
         t = time.localtime()
         h = t.tm_hour
@@ -205,7 +220,7 @@ class monitor(object):
         str_time = m
         done = None
         dones_id = None
-        url = self.url1.dev()
+        url = self.url1.live()
 
         while True:
             try:
@@ -219,13 +234,14 @@ class monitor(object):
                         logger.info("start run:" + str(now.tm_hour) + ":" + str(now.tm_min))
                         for id in job_id:
                             v = self.filter(job_total_count, id)
-                            self.run_ad(id, url, v)
+                            total = self.run_ad(id, url, v)
                             time.sleep(10)
-                            done = self.is_done(id, url)
-                            if int(done) == 1:
-                                self.is_error(id, url)
-                                dones -= 1
-                                dones_id = id
+                            if total < 10:
+                                done = self.is_done(id, url)
+                                if int(done) == 1:
+                                    self.is_error(id, url)
+                                    dones -= 1
+                                    dones_id = id
                         logger.info("".center(70, '&'))
                         if dones_id is not None:
                             job_id.remove(dones_id)
@@ -249,7 +265,7 @@ class monitor(object):
     def filter(self, data, id):
         # print(data.items())
         # 把字典转换成dict_items，循环里面的key和value，满足if条件返回对应的key和value值
-        return {v for k, v in data.items() if k == id}
+        return [v for k, v in data.items() if k == id]
 
 if __name__ == '__main__':
     monitors = monitor()
