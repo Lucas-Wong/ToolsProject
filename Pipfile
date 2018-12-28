@@ -10,6 +10,7 @@ paramiko = "*"
 pydes = "*"
 requests = "*"
 pygame = "*"
+requests-html = "*"
 
 [dev-packages]
 
