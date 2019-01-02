@@ -109,7 +109,7 @@ class downloader(object):
     Modify:
         2017-09-13
     """
-    def get_download_url(self):
+    def get_download_url(self, first_chapter):
         # req = requests.get(url = self.target)
         html = self.download(self.target)
         # html = req.text
@@ -120,9 +120,25 @@ class downloader(object):
         # self.nums = len(a[15:])                                #剔除不必要的章节，并统计章节数
         self.nums = len(a)                                #剔除不必要的章节，并统计章节数
         print(a)
+        print(self.nums)
+
+        is_down = 0
+        document_num = 0
+
         for each in a:
-            self.names.append(each.string)
-            self.urls.append(self.server + each.get('href'))
+            # print('is down %s' % each.get('href'))
+
+            if each.string.find(first_chapter)>=0:
+                # print(each.string)
+                is_down = 1
+
+            if is_down == 1:
+                # print(each.get('href'))
+                self.names.append(each.string)
+                self.urls.append(self.server + each.get('href'))
+                document_num += 1
+
+        self.nums = document_num
 
     """
     函数说明:获取章节内容
@@ -176,10 +192,17 @@ if __name__ == '__main__':
     # 三寸人间 52_52561
     # 雷霆之主 54_54918
     # 武道宗师 1_1452
-    dl = downloader('54_54918')
-    dl.get_download_url()
+    # 大劫主 0_369
+    # 民国谍影 56_56351
+    # 大劫主 0_369
+    # 核血机心 21_21117
+    # 未来游乐场 21_21598
+    dl = downloader('21_21598')
+    first_chapter = '第1章'
+    file_name = '未来游乐场'
+    dl.get_download_url(first_chapter)
     time.sleep(random.randint(1, 2))
-    print('《雷霆之主》开始下载：')
+    print('《%s》开始下载：' % file_name)
     for i in range(dl.nums):
         time.sleep(random.randint(1, 2))
         if dl.urls[i] is not None:
@@ -192,9 +215,9 @@ if __name__ == '__main__':
                     continue
             time.sleep(random.randint(1, 2))
             if text is not None:
-                dl.writer(dl.names[i], '雷霆之主.txt', text)
-            sys.stdout.write("  已下载:%.3f%%" %  float(i/dl.nums) + '\r')
+                dl.writer(dl.names[i], '%s.txt' % file_name, text)
+            sys.stdout.write("  已下载:%.3f%%" % float(i/dl.nums) + '\r')
             print('  已下载:{:.3%}'.format(float(i/dl.nums)), '\r')
             print('当前：', i, ' 总计：', dl.nums)
             sys.stdout.flush()
-    print('《雷霆之主》下载完成')
+    print('《%s》下载完成' % file_name)
