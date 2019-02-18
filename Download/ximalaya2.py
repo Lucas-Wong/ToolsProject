@@ -35,13 +35,21 @@ class XiMa(object):
 
     def get_fm_music(self, fm_url):
         print(fm_url)
-        fm_url = 'https://www.ximalaya.com/shangye/8475135/'
+        # fm_url = 'https://www.ximalaya.com/shangye/8475135/'
+        fm_url = 'https://www.ximalaya.com/shangye/16861863/'
+        print(fm_url)
         r = self.s.get(fm_url, headers=self.header)
+        title2 = re.findall(r'<h1 class="title _t4_">(.*?)</h1>', r.text, re.S)
+        title1 = list(str(title2[0]))
+        print(title1)
+        title1[5] = ''
+        title = [''.join(title1)]
         # print(r.text)
-        title = re.findall(r'<h1 class="title PIuT">(.*?)</h1>', r.text, re.S)
-        max_page = re.findall(r'<form class="tthf"><input type="text" style="display:none" class="tthf"/><input type="number" placeholder="请输入页码" step="1" min="1" '
-                              r'max="(\d+)" class="control-input tthf" value=""/>', r.text, re.S)
+        max_page = re.findall(r'<form class ="_dN2"><input type="text" class="_dN2" style="display:none;"/><input type="number" placeholder="请输入页码" step="1" min="1" '
+                              r'max="(\d+)" class="control-input _dN2" value="">', r.text, re.S)
+        # max_page = [2]
         print(title, max_page)
+
         if max_page and max_page[0]:
             for page in range(1, int(max_page[0]) + 1):
                 fm_urls = fm_url + '/p{}'.format(page)
@@ -52,9 +60,9 @@ class XiMa(object):
             self.get_detail(r.text, title)
 
     def get_detail(self, text, title):
-        track_list = re.findall(r'<div class="text rC5T"><a title="(.*?)" href="(.*?)">.*?'
-                                r'<i class="xuicon xuicon-erji1 rC5T"></i>(.*?)</span></div>'
-                                r'<span class="time rC5T">(.*?)</span>',
+        track_list = re.findall(r'<div class="text _OO"><a title="(.*?)" href="(.*?)">.*?'
+                                r'<i class="xuicon xuicon-erji1 _OO"></i>(.*?)</span></div>'
+                                r'<span class="time _OO">(.*?)</span>',
                                 text, re.S)
         # 爬取一个FM下的每个音频
         for i in track_list:
@@ -66,7 +74,7 @@ class XiMa(object):
             create_time = i[3]
             trackid = str(i[1]).split('/')[3]
             print(trackid)
-            if(int(trackid) <= 142476433):
+            if(int(trackid) != 105533325):
                 continue
             # api中的数据信息
             api = self.base_api + trackid
@@ -94,5 +102,5 @@ class XiMa(object):
 
 if __name__ == '__main__':
     xima = XiMa()
-    url = input(u'请输入要获取喜马拉雅节目第一页的网址：')
+    url = ''#input(u'请输入要获取喜马拉雅节目第一页的网址：')
     xima.get_fm_music(url)

@@ -195,11 +195,13 @@ if __name__ == '__main__':
     # 大劫主 0_369
     # 民国谍影 56_56351
     # 大劫主 0_369
-    # 核血机心 21_21117
-    # 未来游乐场 21_21598
-    dl = downloader('21_21598')
-    first_chapter = '第1章'
-    file_name = '未来游乐场'
+    # 间谍的战争 49_49574
+    # 民国大间谍 57_57272
+    # 我在古代有工厂 56_56895
+    # 超级机器人工厂 52_52009
+    dl = downloader('52_52009')
+    first_chapter = '第01章'
+    file_name = '超级机器人工厂'
     dl.get_download_url(first_chapter)
     time.sleep(random.randint(1, 2))
     print('《%s》开始下载：' % file_name)
