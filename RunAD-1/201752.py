@@ -107,10 +107,11 @@ class monitor(object):
         logger.info("job id:" + str(job_id) + " --- total count: " + str(total_count) + ", Run total count: " + str(total_processed_count))
 
         if any(self.job_processed_total_count) is False:
-            # print('test')
+            # print('test 1')
             self.job_processed_total_count[job_id] = total_processed_count
             self.job_stop_count[job_id] = 1
         else:
+            # print('test 2')
             hasCount = 0
             # print("test count")
             for key in self.job_processed_total_count.keys():
@@ -118,6 +119,8 @@ class monitor(object):
                 if int(key) == job_id:
                     hasCount = 1
                     # print('hasCount = 1')
+                    # print(self.job_processed_total_count[key])
+                    # print('total_processed_count = %s' % total_processed_count)
                     if int(self.job_processed_total_count[key]) == total_processed_count:
                         self.job_stop_count[job_id] += 1
                     else:
@@ -130,10 +133,13 @@ class monitor(object):
         # print('job stop count')
         for key in self.job_stop_count.keys():
             # print('error ?')
+            # print(self.job_stop_count[key])
             if int(self.job_stop_count[key]) > 6:
-                logger.info("Job id: " + key + " stop run. please Restart the new thread.".center(80, "】"))
+                logger.info("Job id: %s stop run. please Restart the new thread."% key)
 
         # print(self.job_stop_count)
+        # print(total_count[0])
+        # print(total_processed_count)
 
         return int(total_count[0]) - int(total_processed_count)
 
@@ -202,11 +208,11 @@ class monitor(object):
             logger.info((str(job_str) + ' error number: ' + str(number)).center(50, '='))
 
     def main(self):
-        job_id = [15362, 15371]
+        job_id = [19757, 19775]
         dones = 2
         job_total_count = {}
-        job_total_count[15362] = 2638
-        job_total_count[15371] = 2627
+        job_total_count[19757] = 2934
+        job_total_count[19775] = 2152
 
         t = time.localtime()
         h = t.tm_hour
